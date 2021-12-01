@@ -1,5 +1,6 @@
 package com.axis.parkingapp.model
 
+import org.bson.types.ObjectId
 import org.jetbrains.annotations.NotNull
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -8,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference
 @Document(collection = "parking")
 data class Parking(
         @Id
-        var _id:Int,
+        var _id:ObjectId?=null,
         var name:String,
         var address:String,
         var country:String,

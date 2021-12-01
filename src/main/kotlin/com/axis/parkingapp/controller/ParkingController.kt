@@ -28,14 +28,14 @@ class ParkingController {
     }
 
     @GetMapping("/getParkingById/{id}")
-    fun getParkingById(@PathVariable id:Int):ResponseEntity<Optional<Parking?>>{
+    fun getParkingById(@PathVariable id:String):ResponseEntity<Optional<Parking?>>{
         var parkingDetails = iParkingService.getParkingById(id)
         return ResponseEntity(parkingDetails,HttpStatus.OK)
     }
 
     @Throws(Exception::class)
     @PutMapping("/updateParkingById/{id}")
-    fun updateParking(@PathVariable id: Int,@RequestBody parking: Parking):ResponseEntity<Any?>
+    fun updateParking(@PathVariable id: String,@RequestBody parking: Parking):ResponseEntity<Any?>
     {
         try {
             var updateParking=   iParkingService.updateParking(id,parking)
@@ -49,7 +49,7 @@ class ParkingController {
     }
 
     @DeleteMapping("/deleteById/{id}")
-    fun deleteParkingById(@PathVariable id: Int):ResponseEntity<String?>
+    fun deleteParkingById(@PathVariable id: String):ResponseEntity<String?>
     {
         var deleteParking = iParkingService.deleteParking(id)
         return ResponseEntity(deleteParking,HttpStatus.OK)

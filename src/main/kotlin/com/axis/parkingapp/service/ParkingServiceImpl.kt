@@ -3,6 +3,7 @@ package com.axis.parkingapp.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import com.axis.parkingapp.dao.IParkingDAO
+import com.axis.parkingapp.dao.IUserDAO
 import com.axis.parkingapp.model.Parking
 import java.util.*
 import kotlin.jvm.Throws
@@ -12,9 +13,12 @@ class ParkingServiceImpl :IParkingService {
 
     @Autowired
     private lateinit var iParkingDAO: IParkingDAO
+    @Autowired
+    private lateinit var iUserDAO: IUserDAO
+
 
     override fun addParking(parking: Parking): Any? {
-        return if(iParkingDAO.existsById(parking.user!!._id))
+        return if(iUserDAO.existsById(parking.user!!._id.toString()))
         {
             iParkingDAO.save(parking)
         }else {
@@ -25,12 +29,13 @@ class ParkingServiceImpl :IParkingService {
         return iParkingDAO.findAll()
     }
 
-    override fun getParkingById(Id: Int): Optional<Parking?> {
+    override fun getParkingById(Id: String): Optional<Parking?> {
         return iParkingDAO.findById(Id)
     }
 
     @Throws(Exception::class)
-    override fun updateParking(id: Int, parking: Parking): Any? {
+    override fun updateParking(id: String, parking: Parking): Any? {
+
 
         return if(iParkingDAO.existsById(id)){
             var acc = iParkingDAO.findById(id).get()
@@ -43,7 +48,7 @@ class ParkingServiceImpl :IParkingService {
             acc.totalslots = parking.totalslots
             acc.availableslots = parking.availableslots
 //            iParkingDAO.save(acc)
-            return if(iParkingDAO.existsById(parking.user!!._id))
+            return if(iUserDAO.existsById(parking.user!!._id.toString()))
             {
                 iParkingDAO.save(parking)
             }else {
@@ -55,7 +60,7 @@ class ParkingServiceImpl :IParkingService {
         }
     }
 
-    override fun deleteParking(id: Int): String {
+    override fun deleteParking(id: String): String {
         return if(iParkingDAO.existsById(id))
         {
             iParkingDAO.deleteById(id)

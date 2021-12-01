@@ -18,20 +18,20 @@ class BookingServiceImpl:IBookingService {
     private lateinit var iUserDAO: IUserDAO
 
     override fun addBooking(booking: Booking): Any? {
-        var getParking = iParkingDAO.findById(booking.parking!!._id).get()
+        var getParking = iParkingDAO.findById(booking.parking!!._id.toString()).get()
 
         if(getParking.availableslots<=0){
             return "No slots available"
         }
-        return if(!iParkingDAO.existsById(booking.parking!!._id))
+        return if(!iParkingDAO.existsById(booking.parking!!._id.toString()))
         {
             "Parking with this id not found"
-        }else if(!iUserDAO.existsById(booking.user!!._id)){
+        }else if(!iUserDAO.existsById(booking.user!!._id.toString())){
             "User with this id not found"
         }else{
             iBookingDAO.save(booking)
             //Decrease count of available slots
-            var acc = iParkingDAO.findById(booking.parking!!._id).get()
+            var acc = iParkingDAO.findById(booking.parking!!._id.toString()).get()
             acc.availableslots = acc.availableslots -1;
             iParkingDAO.save(acc)
         }
