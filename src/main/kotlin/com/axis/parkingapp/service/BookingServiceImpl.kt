@@ -20,7 +20,7 @@ class BookingServiceImpl:IBookingService {
     override fun addBooking(booking: Booking): Any? {
         var getParking = iParkingDAO.findById(booking.parking!!._id.toString()).get()
 
-        if(getParking.availableslots<=0){
+        if(getParking.availableslots!! <=0){
             return "No slots available"
         }
         return if(!iParkingDAO.existsById(booking.parking!!._id.toString()))
@@ -32,7 +32,7 @@ class BookingServiceImpl:IBookingService {
             iBookingDAO.save(booking)
             //Decrease count of available slots
             var acc = iParkingDAO.findById(booking.parking!!._id.toString()).get()
-            acc.availableslots = acc.availableslots -1;
+            acc.availableslots = acc.availableslots!! -1;
             iParkingDAO.save(acc)
         }
     }
