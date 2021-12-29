@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import com.axis.parkingapp.dao.IParkingDAO
 import com.axis.parkingapp.dao.IUserDAO
 import com.axis.parkingapp.model.Parking
+import org.bson.types.ObjectId
 import org.springframework.data.domain.Sort
 import java.util.*
 import kotlin.jvm.Throws
@@ -27,7 +28,7 @@ class ParkingServiceImpl :IParkingService {
         }
     }
     override fun getAllParking(parking: Parking): MutableList<Parking?> {
-//        return iParkingDAO.findAll() 
+//        return iParkingDAO.findAll()
 
         return iParkingDAO.getAllParking(parking.name,parking.country,parking.state,parking.city,parking.address)
     }
@@ -72,6 +73,10 @@ class ParkingServiceImpl :IParkingService {
         else {
             "Parking with id $id not found"
         }
+    }
+
+    override fun getUserParking(id: ObjectId): MutableList<Parking?> {
+        return iParkingDAO.getUserParking(id)
     }
 
 

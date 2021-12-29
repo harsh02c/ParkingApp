@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty
 @Document(collection = "parking")
 data class Parking(
         @Id
-        var _id:ObjectId?=null,
+        var _id:String?=null,
         @field:NotBlank(message = "Name field is mandatory")
         var name:String?=null,
         @field:NotBlank(message = "Address field is mandatory")
@@ -23,8 +23,9 @@ data class Parking(
         @field:NotBlank(message = "City field is mandatory")
         var city:String?=null,
         var price:Float?=null,
+        var images:String?=null,
         var totalslots:Int?=0,
         var availableslots:Int?=0,
         @DocumentReference
-        var user: User?
+        var user: User?=null
 )
